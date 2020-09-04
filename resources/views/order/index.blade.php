@@ -1,6 +1,7 @@
 @extends('layouts.index')
 
 @section('content')
+
 <section id="home-section" class="hero">
     <div class="home-slider owl-carousel">
         <div class="slider-item" {{-- style="background-image: url(images/bg_1.jpg);" --}}>
@@ -36,11 +37,14 @@
 </section>
 
 <section class="ftco-section">
-    <div class="container">
+    <div class="container append_here">
         <div class="row" id="append_seed">
             @foreach($data as $dt)
             <div class="col-md-6 col-lg-3 ftco-animate">
                 <div class="product">
+                    <a href="#" class="img-prod"><img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/No_image_available_600_x_450.svg/1280px-No_image_available_600_x_450.svg.png" alt="Colorlib Template">
+                            <div class="overlay"></div>
+                        </a>
                     <div class="text py-3 pb-4 px-3 text-center">
                         <h3><a href="#">{{$dt->variety}}</a></h3>
                         <div class="d-flex">
@@ -50,13 +54,13 @@
                         </div>
                         <div class="bottom-area d-flex px-3">
                             <div class="m-auto d-flex">
-                                <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                <a href="#" data-id="{{$dt->seedVarietyId}}" class="product_detail_button d-flex justify-content-center align-items-center text-center">
                                     <span><i class="ion-ios-menu"></i></span>
                                 </a>
-                                <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                <a href="#" data-id="{{$dt->seedVarietyId}}" class="buy_now_button d-flex justify-content-center align-items-center mx-1">
                                     <span><i class="ion-ios-cart"></i></span>
                                 </a>
-                                <a href="#" class="heart d-flex justify-content-center align-items-center ">
+                                <a href="#" data-id="{{$dt->seedVarietyId}}" class="heart d-flex justify-content-center align-items-center ">
                                     <span><i class="ion-ios-heart"></i></span>
                                 </a>
                             </div>
@@ -75,6 +79,9 @@
         </div>
     </div>
 </section>
+    
+
+@include('order.product_details')
 @endsection
 
 @push('scripts')

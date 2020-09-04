@@ -15,4 +15,5 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('/shop','OrderController@index')->name('shop.index');
 
-Route::post('/shop_display_seeds','OrderController@display_seeds')->name('order.display_seed');
+Route::get('/shop_display_seeds','OrderController@display_seeds')->name('order.display_seed');
+Route::post('/seed_details','OrderController@seed_details')->name('order.seed_details');

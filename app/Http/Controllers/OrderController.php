@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\SeedStock;
+use App\Seed;
 use DB;
 class OrderController extends Controller
 {
@@ -40,7 +41,7 @@ class OrderController extends Controller
         if($activeStockTable != null){
             $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);
             $stocks_tbl = $stocks['table'];
-            $test = DB::connection('warehouse')
+            $data = DB::connection('warehouse')
             ->table($stocks['table'].' as sm')
             ->leftJoin('rsisdev_seed_seed.seed_characteristics as ss','sm.seedVarietyId','=','ss.id')
             ->select('ss.variety','sm.*')
@@ -48,6 +49,13 @@ class OrderController extends Controller
             ->paginate(2);
         }
         
-        return $test;
+        return view('order.products',compact('data'))->render();
+    }
+
+    public function seed_details(Request $request){
+
+       $seeds = Seed::findOrFail($request->seed_id);
+
+       return $seeds;
     }
 }

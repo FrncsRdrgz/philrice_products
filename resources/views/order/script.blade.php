@@ -1,21 +1,43 @@
 <script type="text/javascript">
 	document.addEventListener("DOMContentLoaded",function(){
 		$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+
 		
-		/*setTimeout(function(){
-			display_seed()
-		},1000)*/
-		function display_seed(){
+		/*ALL BUTTONS HERE*/
+		$(document).on('click','.product a',function(e){
+			e.preventDefault();
+		})
+		//refresh the displayed seeds according to page
+		$(document).on('click','#pagination a', function(e){
+			e.preventDefault();
+			
+			var page = $(this).attr('href').split('page=')[1];
+			display_seed(page);
+		})
+
+		//display the seeds details when clicked the product detail button
+		$(document).on('click','.product_detail_button',function(e){
+			e.preventDefault()
+			seed_id=$(this).data('id');
+			seed_detail(seed_id);
+			//$('#exampleModal').modal();
+		})
+
+		$(document).on('click','.buy_now_button',function(e){
+			e.preventDefault();
+		})
+
+		/*ALL FUNCTIONS HERE*/
+		function display_seed(page){
 			$.ajax({
-				url: 'shop_display_seeds',
-				type: 'POST',
-				dataType: 'json',
+				url: 'shop_display_seeds?page='+page,
+				type: 'get',
 			})
 			.done(function(response) {
 
 				var append_seed = document.getElementById("append_seed");
-				console.log(response);
-				response.data.map(function(value, key) {
+				$('.append_here').html(response);
+				/*response.data.map(function(value, key) {
 
 					var card_div = document.createElement("div");
 					card_div.classList.add("col-md-6","col-lg-3","ftco-animate","fadeInUp", "ftco-animated");
@@ -125,14 +147,33 @@
 
 					//append card div to main div
 					append_seed.appendChild(card_div);
-				})
+				})*/
 			})
-			.fail(function() {
-				console.log("error");
+		}
+
+		function seed_detail(seed_id){
+			$.ajax({
+				url:'seed_details',
+				type:'POST',
+				data:{
+					seed_id :seed_id
+				}
 			})
-			.always(function() {
-				console.log("complete");
-			});
+			.done(function(response){
+				html = "";
+				html += 'Ecosystem';
+				html += '<h4>'+response.ecosystem+'</h4>';
+				html += 'Average yield';
+				html += '<h4>'+response.ave_yld + ' per ha </h4>';
+				html += 'Max yield';
+				html += '<h4>'+response.max_yld + ' per ha </h4>';
+				html += 'Maturity';
+				html +='<h4>'+response.maturity + ' days </h4>';
+				$('#exampleModalLabel').html('<h2>'+response.variety+'</h2>')
+				$('#exampleModal .modal-body').html(html);
+				$('#exampleModal').modal();
+			})
+			
 		}
 	})
 </script>
