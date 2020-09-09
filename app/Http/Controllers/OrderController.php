@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\SeedStock;
 use App\Seed;
-use DB;
+use App\Cart;
+use DB,Auth;
+use Carbon\Carbon;
 class OrderController extends Controller
 {
     public function __construct()
@@ -56,6 +58,58 @@ class OrderController extends Controller
 
        $seeds = Seed::findOrFail($request->seed_id);
 
-       return $seeds;
+
+       $activeStockTable = $this->activeStockTable();
+
+        if($activeStockTable != null){
+            $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);
+            $stocks_tbl = $stocks['table'];
+            $data = DB::connection('warehouse')
+                ->table($stocks['table'].' as sm')
+                ->leftJoin('rsisdev_seed_seed.seed_characteristics as ss','sm.seedVarietyId','=','ss.id')
+                ->select('ss.maturity','sm.*')
+                ->where('ss.id',$request->seed_id)
+                ->orderBy('sm.stockId','ASC')
+                ->get();
+        }
+
+        $query = ['seeds'=> $seeds, 'data'=> $data];
+       return $query;
+    }
+
+    public function add_to_cart(Request $request){
+        $seed_id = $request->seed_id;
+        $seed_class = $request->seed_class;
+        $quantity = $request->quantity;
+        $activeStockTable = $this->activeStockTable();
+
+        if($activeStockTable != null){
+            $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);
+            $stocks_tbl = $stocks['table'];
+            $data = DB::connection('warehouse')
+                ->table($stocks['table'].' as sm')
+                ->leftJoin('rsisdev_seed_seed.seed_characteristics as ss','sm.seedVarietyId','=','ss.id')
+                ->select('ss.maturity','sm.*')
+                ->where('sm.seedVarietyId',$seed_id)
+                ->where('sm.taggedSeedClass',$seed_class)
+                ->orderBy('sm.stockId','ASC')
+                ->first();
+        }
+
+        $params = array(
+            'user_id' => Auth::user()->user_id,
+            'pallet_code' => $data->palletCode,
+            'status' => 1,
+            'quantity' => $quantity*$data->packaging
+        );
+
+        $cart = new Cart;
+
+        $cart->user_id = Auth::user()->user_id;
+        $cart->pallet_code = $data->palletCode;
+        $cart->status = 0;
+        $cart->quantity = $quantity * $data->packaging;
+
+        $cart->save();
     }
 }

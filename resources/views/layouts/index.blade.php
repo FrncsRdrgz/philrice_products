@@ -49,6 +49,7 @@
 			    </div>
 			  </div>
 	    </div>
+	    @include('layouts.sidebar')
 	    @include('layouts.navbar')
 
 	    @yield('content')

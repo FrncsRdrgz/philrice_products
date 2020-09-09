@@ -1,5 +1,7 @@
 <script type="text/javascript">
 	document.addEventListener("DOMContentLoaded",function(){
+		var fs;
+		var rs;
 		$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 
 		
@@ -27,7 +29,53 @@
 			e.preventDefault();
 		})
 
+		$(document).on('click','.add_to_cart_button', function(e){
+			e.preventDefault();
+
+			var seed_variety = this.parentNode.parentNode.querySelector('.seed_div').dataset.id;
+			var seed_class = $("input[name='seed_class']:checked").val();
+			var quantity = $(".quantity").val();
+
+			console.log(quantity);
+			if(seed_class === undefined){
+				alert('please select seed_class')
+			}
+			else{
+				var params = {id:seed_variety,seed_class:seed_class,quantity:quantity};
+				add_to_cart(params);
+			}
+			
+		})
+
+		$(document).on('change','input:radio[name="seed_class"]',function(){
+			if($(this).is(':checked') && $(this).val() == 'FS'){
+				html ='';
+				html += 'Packaging (kilos per bag)';
+				html += '<h4>'+fs[0].packaging+'</h4> ';
+
+				$('.packaging_div').html(html);
+
+				//$('.qty_wrapper input[name="quantity"]').val(fs[0].packaging).attr("step",fs[0].packaging);
+			}
+			if($(this).is(':checked') && $(this).val() == 'RS'){
+				html ='';
+				html += 'Packaging (kilos per bag)';
+				html += '<h4>'+rs[0].packaging+'</h4>';
+
+				$('.packaging_div').html(html);
+				//$('.qty_wrapper input[name="quantity"]').val(rs[0].packaging).attr("step",rs[0].packaging);
+			}
+		})
+		//Buttons that will change the value of quantity
+		$(document).on('click','.minus',function(){
+			this.parentNode.querySelector("input[type=number]").stepDown();
+		})
+		$(document).on('click','.plus',function(){
+			this.parentNode.querySelector("input[type=number]").stepUp();
+		})
+
 		/*ALL FUNCTIONS HERE*/
+		//display all the seeds from warehouse
 		function display_seed(page){
 			$.ajax({
 				url: 'shop_display_seeds?page='+page,
@@ -151,6 +199,7 @@
 			})
 		}
 
+		//display the details of selected seed
 		function seed_detail(seed_id){
 			$.ajax({
 				url:'seed_details',
@@ -160,20 +209,72 @@
 				}
 			})
 			.done(function(response){
+				console.log(response);
+				fs = response.data.filter(function(test){
+					return test.taggedSeedClass == 'FS'
+				})
+				rs = response.data.filter(function(test){
+					return test.taggedSeedClass == 'RS'
+				})
+				//console.log(fs.maturity,rs);
 				html = "";
-				html += 'Ecosystem';
-				html += '<h4>'+response.ecosystem+'</h4>';
-				html += 'Average yield';
-				html += '<h4>'+response.ave_yld + ' per ha </h4>';
-				html += 'Max yield';
-				html += '<h4>'+response.max_yld + ' per ha </h4>';
-				html += 'Maturity';
-				html +='<h4>'+response.maturity + ' days </h4>';
-				$('#exampleModalLabel').html('<h2>'+response.variety+'</h2>')
+				html += '<div class="seed_div" data-id="'+response.seeds.id+'">'
+					html += 'Ecosystem';
+					html += '<h4>'+response.seeds.ecosystem+'</h4>';
+					html += 'Average yield';
+					html += '<h4>'+response.seeds.ave_yld + ' per ha </h4>';
+					html += 'Max yield';
+					html += '<h4>'+response.seeds.max_yld + ' per ha </h4>';
+					html += 'Maturity';
+					html +='<h4>'+response.seeds.maturity + ' days </h4>';
+					html += '<div class="seed_class_div">';
+					html += 'Seed Class</br>'
+					if(fs === undefined || fs.length==0){
+						html += '<input type="radio" name="seed_class" id="fs_class" class="radio_input" >';
+						html += '<label for="fs_class" id="fs_label" class="radio_label disabled radio-disabled">Foundation Seed</label>'
+					}
+					else {
+						html += '<input type="radio" name="seed_class" id="fs_class" class="radio_input" value="FS" >';
+						html += '<label for="fs_class" id="fs_label" class="radio_label">Foundation Seed</label>'
+					}
+					if(rs === undefined || rs.length==0){
+						html += '<input type="radio" id="rs_class" name="seed_class" class="radio_input" >';
+						html += '<label for="rs_class" id="rs_label" class="radio_label disabled radio-disabled">Registered Seed</label>'
+					}
+					else {
+						html += '<input type="radio" id="rs_class" name="seed_class" class="radio_input" value="RS" >';
+						html += '<label for="rs_class" id="rs_label" class="radio_label">Registered Seed</label>'
+					}
+					html += '</div>';
+					html += '<div class="packaging_div">';
+					html += '</div>';
+					html += 'Quantity (per bag)<br/>'
+					html += '<div class="qty_wrapper">';
+						html += '<button class="minus"></button>';
+						html += '<input type="number" min="0" value="1" name="quantity" class="quantity">'
+						html += '<button class="plus"></button>';
+					html += '</div>';
+				html += '</div>';
+				$('#exampleModalLabel').html('<h2>'+response.seeds.variety+'</h2>')
 				$('#exampleModal .modal-body').html(html);
 				$('#exampleModal').modal();
 			})
-			
+		}
+
+		function add_to_cart(params){
+			$.ajax({
+				url:'add_to_cart',
+				type:'POST',
+				data:{
+					seed_id : params.id,
+					seed_class :params.seed_class,
+					quantity: params.quantity
+				}
+			})
+			.done(function(response){
+
+			})
+
 		}
 	})
 </script>

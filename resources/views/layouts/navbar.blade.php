@@ -12,7 +12,7 @@
 	      <li class="nav-item"><a href="#" class="nav-link">About</a></li>
 	      <li class="nav-item"><a href="#" class="nav-link">Blog</a></li>
 	      <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
-	      <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+	      <li class="nav-item cta cta-colored cart_trigger_button"><a href="javascript:void();" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
 
 	    </ul>
 	  </div>

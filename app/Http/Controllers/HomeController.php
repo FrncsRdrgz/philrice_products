@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\SeedStock;
-use DB;
+use App\Cart;
+use DB, Auth;
 class HomeController extends Controller
 {
     /**
@@ -27,5 +28,10 @@ class HomeController extends Controller
     {
         
         return view('index');
+    }
+
+    public function view_cart_data(){
+        $cart = new Cart;
+        return $cart->findByUserId(Auth::id());
     }
 }

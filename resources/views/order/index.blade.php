@@ -1,7 +1,9 @@
 @extends('layouts.index')
 
+@push('styles')
+    @include('order.style')
+@endpush
 @section('content')
-
 <section id="home-section" class="hero">
     <div class="home-slider owl-carousel">
         <div class="slider-item" {{-- style="background-image: url(images/bg_1.jpg);" --}}>
