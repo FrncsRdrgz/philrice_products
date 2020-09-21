@@ -108,7 +108,7 @@ class OrderController extends Controller
         $cart->user_id = Auth::user()->user_id;
         $cart->pallet_code = $data->palletCode;
         $cart->status = 0;
-        $cart->quantity = $quantity * $data->packaging;
+        $cart->quantity = $quantity;
 
         $cart->save();
     }
