@@ -12,7 +12,7 @@
         
       </div>
       <div class="modal-footer" style="border-top:0px !important;">
-        <button type="button" class="btn btn-dark btn-block add_to_cart_button" style="border-radius: 0px !important;">Add to cart</button>
+        <button type="button" class="btn btn-dark btn-block add_to_cart_button" style="border-radius: 0px !important; cursor: not-allowed;" disabled>Add to cart</button>
       </div>
     </div>
   </div>

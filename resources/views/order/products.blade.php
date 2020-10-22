@@ -15,12 +15,12 @@
                         </div>
                         <div class="bottom-area d-flex px-3">
                             <div class="m-auto d-flex">
-                                <a href="#" data-id="{{$dt->seedVarietyId}}" class="product_detail_button add-to-cart d-flex justify-content-center align-items-center text-center" title="Product detail">
-                                    <span><i class="ion-ios-menu"></i></span>
-                                </a>
-                                <a href="#" data-id="{{$dt->seedVarietyId}}" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                <a href="#" data-id="{{$dt->seedVarietyId}}" class="product_detail_button add-to-cart d-flex justify-content-center align-items-center text-center mx-1" title="Product detail">
                                     <span><i class="ion-ios-cart"></i></span>
                                 </a>
+{{--                                 <a href="#" data-id="{{$dt->seedVarietyId}}" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                    <span><i class="ion-ios-cart"></i></span>
+                                </a> --}}
                                 <a href="#" data-id="{{$dt->seedVarietyId}}" class="heart d-flex justify-content-center align-items-center ">
                                     <span><i class="ion-ios-heart"></i></span>
                                 </a>

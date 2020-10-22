@@ -1,3 +1,19 @@
+@media screen and (max-width: 500px){
+  .sidenav-open{
+    width:100% !important;
+  }
+}
+.cart-body{
+  overflow-y: scroll;
+  height:52rem;
+  position:absolute;
+}
+.hidden_scrollable{
+    position:relative;
+    overflow:hidden;
+    height:52rem;
+    
+}
 .sidenav {
   height: 100%;
   width: 0;
@@ -15,11 +31,7 @@
 hr{
   width:90%;
 }
-.cart-body{
-
-}
 .sidenav a {
-  padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
   color: #818181;
@@ -40,7 +52,7 @@ hr{
 }
 
 .sidenav-open{
-	width:400px;
+	width:25rem;
 }
 
 @media screen and (max-height: 450px) {
@@ -67,7 +79,7 @@ hr{
 	padding-top: 60px;
 }
 
-/*.qty_wrapper button {
+/*.qty_wrapper1 button {
   outline:none;
   width:3rem;
   height:2rem;
@@ -90,11 +102,11 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none;
 }
-.qty_wrapper {
+.qty_wrapper1 {
   border: 2px solid #ddd;
-  width: 11.8rem;
+  width: 8.1rem;
 }
-.qty_wrapper button {
+.qty_wrapper1 button {
   -webkit-appearance: none;
   background-color: transparent;
   border: none;
@@ -104,46 +116,54 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
   position: relative;
   outline: none;
-  width: 3.2rem;
-  height: 2rem;
-  padding-top: .8rem;
+  width: 1.4rem;
+  height: .6rem;
+  
 }
-.qty_wrapper button:before,
-.qty_wrapper button:after {
+.qty_wrapper1 button:before,
+.qty_wrapper1 button:after {
   display: inline-block;
   position: absolute;
   content: '';
   height: 2px;
   transform: translate(-50%, -50%);
 }
-.qty_wrapper button.plus:after {
+.qty_wrapper1 button.plus1:after {
   transform: translate(-50%, -50%) rotate(90deg);
 }
 
-.qty_wrapper button.minus {
-  padding-left: 8px;
+.qty_wrapper1 button.minus1 {
+/*  padding-left: 8px;*/
 }
-.qty_wrapper button.plus {
+.qty_wrapper1 button.plus1 {
   padding-left: 5px;
 }
-.qty_wrapper button:before,
-.qty_wrapper button:after {
+.qty_wrapper1 button:before,
+.qty_wrapper1 button:after {
   width: 1rem;
   background-color: #212121;
 }
-.qty_wrapper input[type=number] {
+.qty_wrapper1 input[type=number] {
   max-width: 5rem;
-  padding: .5rem;
   border: solid #ddd;
   border-width: 0 2px;
-  font-size: 2rem;
-  height: 3rem;
+  font-size: 1rem;
+  /*height: 3rem;*/
   font-weight: bold;
   outline: none;
 }
 @media not all and (min-resolution:.001dpcm)
 { @supports (-webkit-appearance:none) and (stroke-color:transparent) {
-  .qty_wrapper.safari_only button:before, 
-  .qty_wrapper.safari_only button:after {
+  .qty_wrapper1.safari_only button:before, 
+  .qty_wrapper1.safari_only button:after {
     margin-top: -.6rem;
   }
+}
+}
+
+.test {
+  position: fixed;
+  bottom:0;
+  background-color: red;
+  width:100%;
+}

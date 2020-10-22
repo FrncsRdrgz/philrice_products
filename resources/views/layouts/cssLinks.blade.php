@@ -18,4 +18,5 @@
 <link rel="stylesheet" href="{{asset('public/assets/vegefoods/css/flaticon.css')}}">
 <link rel="stylesheet" href="{{asset('public/assets/vegefoods/css/icomoon.css')}}">
 <link rel="stylesheet" href="{{asset('public/assets/vegefoods/css/style.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('public/css/style.css')}}">
+
+<link rel="stylesheet" type="text/css" href="{{asset('public/css/style1.css')}}">

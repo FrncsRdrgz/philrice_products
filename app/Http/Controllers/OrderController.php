@@ -103,13 +103,57 @@ class OrderController extends Controller
             'quantity' => $quantity*$data->packaging
         );
 
-        $cart = new Cart;
+        $check_cart = Cart::where('pallet_code',$data->palletCode)->first();
 
-        $cart->user_id = Auth::user()->user_id;
-        $cart->pallet_code = $data->palletCode;
-        $cart->status = 0;
-        $cart->quantity = $quantity;
+        if($check_cart != null){
+            $cart = Cart::findOrFail($check_cart->cart_id);
 
-        $cart->save();
+            $cart->quantity = $cart->quantity + $quantity;
+            $cart->save();
+        }
+        else{
+            $cart = new Cart;
+
+            $cart->user_id = Auth::user()->user_id;
+            $cart->pallet_code = $data->palletCode;
+            $cart->status = 0;
+            $cart->quantity = $quantity;
+
+            $cart->save();  
+        }
+
+        
+    }
+
+    public function view_cart_data(){
+        $cart_data = Cart::where('user_id',Auth::id())->where('status',0)->get();
+
+        $activeStockTable = $this->activeStockTable();
+        //dd($cart_data);
+        if($activeStockTable != null){
+            $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);
+            $stocks_tbl = $stocks['table'];
+
+            $data = array();
+            foreach($cart_data as $cd){
+                $query = DB::connection('warehouse')
+                ->table($stocks['table'].' as sm')
+                ->leftJoin('rsisdev_seed_seed.seed_characteristics as ss','sm.seedVarietyId','=','ss.id')
+                ->select('ss.maturity','ss.variety','sm.*')
+                ->where('sm.palletCode',$cd->pallet_code)
+                ->orderBy('sm.stockId','ASC')
+                ->get();
+
+                foreach($query as $q){
+                    $data[] = array(
+                        'variety' => $q->variety,
+                        'seed_class' => $q->taggedSeedClass,
+                        'quantity' => $cd->quantity
+
+                    );
+                }
+            }
+        }
+        return $data;
     }
 }

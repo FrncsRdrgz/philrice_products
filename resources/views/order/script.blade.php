@@ -54,17 +54,18 @@
 				html += '<h4>'+fs[0].packaging+'</h4> ';
 
 				$('.packaging_div').html(html);
-
+				$('.add_to_cart_button').prop('disabled',false).css('cursor','pointer')
 				//$('.qty_wrapper input[name="quantity"]').val(fs[0].packaging).attr("step",fs[0].packaging);
 			}
 			if($(this).is(':checked') && $(this).val() == 'RS'){
 				html ='';
 				html += 'Packaging (kilos per bag)';
 				html += '<h4>'+rs[0].packaging+'</h4>';
-
+				$('.add_to_cart_button').prop('disabled',false).css('cursor','pointer')
 				$('.packaging_div').html(html);
 				//$('.qty_wrapper input[name="quantity"]').val(rs[0].packaging).attr("step",rs[0].packaging);
 			}
+
 		})
 		//Buttons that will change the value of quantity
 		$(document).on('click','.minus',function(){
@@ -272,7 +273,7 @@
 				}
 			})
 			.done(function(response){
-
+				$('#exampleModal').modal('hide')
 			})
 
 		}
