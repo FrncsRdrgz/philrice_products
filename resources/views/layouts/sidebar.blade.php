@@ -27,6 +27,6 @@
 	</div>
 	</div>
 	<div class="test">
-		<span>Sticky</span>
+		<a href="{{url('/checkout')}}" class="btn btn-light">Proceed to Checkout</a>
 	</div>
 </div>

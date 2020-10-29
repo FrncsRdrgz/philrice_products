@@ -1,16 +1,15 @@
 <script type="text/javascript">
-	document.addEventListener("DOMContentLoaded",function(){
+	$(document).ready(function(){
 		var fs;
 		var rs;
 		$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-
 		
 		/*ALL BUTTONS HERE*/
 		$(document).on('click','.product a',function(e){
 			e.preventDefault();
 		})
 		//refresh the displayed seeds according to page
-		$(document).on('click','#pagination a', function(e){
+		$(document).on('click','.pagination a', function(e){
 			e.preventDefault();
 			
 			var page = $(this).attr('href').split('page=')[1];

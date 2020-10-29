@@ -22,3 +22,5 @@ Route::get('/shop_display_seeds','OrderController@display_seeds')->name('order.d
 Route::post('/seed_details','OrderController@seed_details')->name('order.seed_details');
 Route::post('/add_to_cart','OrderController@add_to_cart')->name('order.add_to_cart');
 Route::get('/view_cart_data','OrderController@view_cart_data')->name('order.view_cart_data');
+
+Route::get('/checkout','OrderController@checkout')->name('checkout.index'); 

@@ -3,6 +3,9 @@
     width:100% !important;
   }
 }
+body{
+  background-color:#f4f4f4;
+}
 .cart-body{
   overflow-y: scroll;
   height:52rem;
@@ -31,17 +34,7 @@
 hr{
   width:90%;
 }
-.sidenav a {
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
 
-.sidenav a:hover {
-  color: #f1f1f1;
-}
 
 .sidenav .closebtn {
   position: absolute;
@@ -160,10 +153,13 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 }
+.pagination {
+  display: flex;
+}
 
-.test {
-  position: fixed;
-  bottom:0;
-  background-color: red;
-  width:100%;
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
 }

@@ -1,7 +1,7 @@
 @extends('layouts.index')
 
 @section('content')
-<section id="home-section" class="hero">
+{{-- <section id="home-section" class="hero">
     <div class="home-slider owl-carousel">
         <div class="slider-item" style="background-image: url(images/bg_1.jpg);">
             <div class="overlay"></div>
@@ -84,5 +84,5 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 @endsection
