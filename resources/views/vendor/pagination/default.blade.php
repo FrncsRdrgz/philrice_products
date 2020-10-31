@@ -1,6 +1,5 @@
 @if ($paginator->hasPages())
-<div class="text-center">
-    <ul class="pagination text-center">
+    <ul class="pagination">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
             <li class="disabled" style="cursor:not-allowed;"><span class="bg-light text-secondary">&laquo;</span></li>
@@ -34,5 +33,4 @@
             <li class="disabled" style="cursor:not-allowed;"><span class="bg-light text-secondary">&raquo;</span></li>
         @endif
     </ul>
-</div>
 @endif

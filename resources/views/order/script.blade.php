@@ -42,8 +42,7 @@
 			else{
 				var params = {id:seed_variety,seed_class:seed_class,quantity:quantity};
 				add_to_cart(params);
-			}
-			
+			}		
 		})
 
 		$(document).on('change','input:radio[name="seed_class"]',function(){
@@ -64,7 +63,6 @@
 				$('.packaging_div').html(html);
 				//$('.qty_wrapper input[name="quantity"]').val(rs[0].packaging).attr("step",rs[0].packaging);
 			}
-
 		})
 		//Buttons that will change the value of quantity
 		$(document).on('click','.minus',function(){
@@ -274,7 +272,6 @@
 			.done(function(response){
 				$('#exampleModal').modal('hide')
 			})
-
 		}
 	})
 </script>

@@ -115,5 +115,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 }
 
+.product_detail_button:hover{
+  cursor:pointer;
+}
 
 </style>

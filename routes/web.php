@@ -16,7 +16,7 @@ Route::get('/', 'HomeController@index')->name('index');
 Route::post('/view_cart_data','HomeController@view_cart_data')->name('home.view_cart_data');
 
 Route::get('/shop','OrderController@index')->name('shop.index');
-
+Route::get('/cart','OrderController@cart')->name('cart.index');
 Route::get('/shop_display_seeds','OrderController@display_seeds')->name('order.display_seed');
 
 Route::post('/seed_details','OrderController@seed_details')->name('order.seed_details');
