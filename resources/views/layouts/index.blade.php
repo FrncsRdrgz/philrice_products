@@ -11,12 +11,14 @@
 
 		@stack('styles')
 	</head>
-	<body class="layout-top-nav layout-footer-fixed">
+	<body class="layout-top-nav" style="height: auto;">
 		<div class="wrapper">
 
 		    @include('layouts.navbar')
 		    @include('layouts.sidebar')
-		    @yield('content')
+		    <div class="content-wrapper">
+		    	@yield('content')
+			</div>
 
 		    @include('layouts.footer')
 		</div>

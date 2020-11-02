@@ -72,6 +72,8 @@
 			this.parentNode.querySelector("input[type=number]").stepUp();
 		})
 
+		
+
 		/*ALL FUNCTIONS HERE*/
 		//display all the seeds from warehouse
 		function display_seed(page){
@@ -273,5 +275,7 @@
 				$('#exampleModal').modal('hide')
 			})
 		}
+
+
 	})
 </script>

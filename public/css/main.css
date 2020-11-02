@@ -97,7 +97,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .qty_wrapper1 {
   border: 2px solid #ddd;
-  width: 8.1rem;
+  width: 6.6rem;
 }
 .qty_wrapper1 button {
   -webkit-appearance: none;
@@ -137,7 +137,7 @@ input[type=number]::-webkit-outer-spin-button {
   background-color: #212121;
 }
 .qty_wrapper1 input[type=number] {
-  max-width: 5rem;
+  max-width: 3rem;
   border: solid #ddd;
   border-width: 0 2px;
   font-size: 1rem;

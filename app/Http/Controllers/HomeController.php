@@ -26,8 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        
-        return view('index');
+        $item_count = $this->item_count();
+        return view('index',compact('item_count'));
     }
 
     public function view_cart_data(){

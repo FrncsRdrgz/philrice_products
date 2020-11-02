@@ -117,6 +117,10 @@ input[type=number]::-webkit-outer-spin-button {
 
 .product_detail_button:hover{
   cursor:pointer;
+  box-shadow: 2px 3px 6px #888888;
 }
 
+.no_radius{
+  border-radius: 0px !important;
+}
 </style>

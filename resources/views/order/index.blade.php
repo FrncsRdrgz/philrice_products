@@ -5,7 +5,7 @@
 @endpush
 @section('content')
 
-<section class="content">
+<div class="content">
     <div class="container append_here mt-3">
         <div class="row" id="append_seed">
             @foreach($data as $dt)
@@ -28,7 +28,7 @@
         </div>
               {{$data->links()}}
     </div>
-</section>
+</div>
     
 
 @include('order.product_details')

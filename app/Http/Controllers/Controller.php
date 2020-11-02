@@ -7,7 +7,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Browser;
-use DB;
+use DB, Auth;
 use Storage;
 use App\Monitoring;
 use App\Affiliation;
@@ -19,6 +19,7 @@ use App\Activity;
 use App\User;
 use App\TableLog;
 use Entrust;
+use App\Cart;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -91,5 +92,9 @@ class Controller extends BaseController
                 ->orderBy('createdAt','ASC')
                 ->get()
                 ->first();
+    }
+
+    public function item_count(){
+        return Cart::select(DB::raw('SUM(quantity) as quantity'))->where('user_id',Auth::id())->where('status',0)->get()->first();
     }
 }

@@ -34,12 +34,14 @@ class OrderController extends Controller
             ->paginate(2);
         }
         //dd($data);
-        return view('order.index',compact('data'));
+        $item_count = $this->item_count();
+        return view('order.index',compact('data','item_count'));
     }
 
     public function display_seeds(){
 
         $activeStockTable = $this->activeStockTable();
+        $item_count = $this->item_count;
         if($activeStockTable != null){
             $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);
             $stocks_tbl = $stocks['table'];
@@ -158,7 +160,7 @@ class OrderController extends Controller
     }
 
     public function checkout(){
-
+        $item_count = $this->item_count;
         $activeStockTable = $this->activeStockTable();
         if($activeStockTable != null){
             $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);
@@ -170,39 +172,6 @@ class OrderController extends Controller
             ->groupBy('seedVarietyId')
             ->paginate(2);
         }
-        return view('order.checkout',compact('data'));
-    }
-
-    public function cart(){
-        $cart_data = Cart::where('user_id',Auth::id())->where('status',0)->get();
-
-        $activeStockTable = $this->activeStockTable();
-        //dd($cart_data);
-        if($activeStockTable != null){
-            $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);
-            $stocks_tbl = $stocks['table'];
-
-            $data = array();
-            foreach($cart_data as $cd){
-                $query = DB::connection('warehouse')
-                ->table($stocks['table'].' as sm')
-                ->leftJoin('rsisdev_seed_seed.seed_characteristics as ss','sm.seedVarietyId','=','ss.id')
-                ->select('ss.maturity','ss.variety','sm.*')
-                ->where('sm.palletCode',$cd->pallet_code)
-                ->orderBy('sm.stockId','ASC')
-                ->get();
-
-                foreach($query as $q){
-                    $data[] = array(
-                        'variety' => $q->variety,
-                        'seed_class' => $q->taggedSeedClass,
-                        'quantity' => $cd->quantity
-
-                    );
-                }
-            }
-        }
-        dd($data);
-        return view('order.cart',compact('data'));
+        return view('order.checkout',compact('data','item_count'));
     }
 }

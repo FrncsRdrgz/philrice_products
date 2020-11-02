@@ -20,7 +20,7 @@
 			  <li class="nav-item">
 			    <a href="{{url('/shop')}}" class="nav-link">Shop</a>
 			  </li>
-			  <li class="nav-item cart_trigger_button"><a href="{{url('/cart')}}" class="nav-link"><span class="fa fa-shopping-cart"></span></a></li>
+			  <li class="nav-item cart_trigger_button"><a href="{{url('/cart')}}" class="nav-link"><i class="fa fa-shopping-cart"></i><span class="badge badge-primary navbar-badge">{{$item_count->quantity}}</span></a></li>
 
 			</ul>
 		</div>
