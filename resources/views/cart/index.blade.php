@@ -6,7 +6,7 @@
 @section('content')
 
 <section class="content">
-    <div class="container append_here mt-3">
+    <div class="container mt-3">
         <div class="card no_radius mb-2">
             <div class="card-body p-2">
                 <div class="row">
@@ -32,36 +32,40 @@
             </div>
         </div>
 
-        @foreach($data as $dt)
-        <div class="card no_radius mb-2">
-            <div class="card-body p-2">
-                <div class="row">
-                    <div class="col-md-1">
-                        <input type="checkbox" class="checkMe">
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="h6">{{$dt['variety']}}</h5>
-                    </div>
-                    <div class="col-md-2 offset-md-1">
-                        <h5 class="h6 text-center">600</h5>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="qty_wrapper1 m-auto">
-                        <button class="minus1"></button>
-                        <input type="number" min="0" value="{{$dt['quantity']}}" name="quantity" class="quantity1">
-                        <button class="plus1"></button>
+        <div class="append_here">
+            {{-- @foreach($data as $dt)
+            <div class="card no_radius mb-2">
+                <div class="card-body p-2">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <input type="checkbox" class="checkMe">
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="h6 text-center">{{600*$dt['quantity']}}</h5>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#" class="text-center">Delete</a>
+                        <div class="col-md-2">
+                            <h5 class="h6">{{$dt['variety']}}</h5>
+                            <img class="img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/No_image_available_600_x_450.svg/1280px-No_image_available_600_x_450.svg.png" alt="Colorlib Template">
+                                <div class="overlay"></div>      
+                        </div>
+                        <div class="col-md-2 offset-md-1">
+                            <h5 class="h6 text-center">600</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="qty_wrapper1 m-auto">
+                            <button class="minus1"></button>
+                            <input type="number" min="0" value="{{$dt['quantity']}}" name="quantity" class="quantity1">
+                            <button class="plus1"></button>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="h6 text-center">{{600*$dt['quantity']}}</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="#" class="text-center">Delete</a>
+                        </div>
                     </div>
                 </div>
             </div>
+            @endforeach --}}
         </div>
-        @endforeach
 
     </div>
     <div class="cart-footer">
@@ -70,7 +74,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-2 offset-md-8">
-                            <h6>Total Price:<strong>800</strong></h6>
+                            <h6>Subtotal Price:<strong class="subtotal h6"></strong></h6>
                         </div>
                         <div class="col-md-2 ">
                             <button class="btn btn-lg btn-danger">Checkout</button>

@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('public/assets/AdminLTE-3.0.0/plugins/fontawesome-free/css/all.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/assets/AdminLTE-3.0.0/plugins/select2/css/select2.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/assets/AdminLTE-3.0.0/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
-
+<link rel="stylesheet" type="text/css" href="{{asset('public/assets/AdminLTE-3.0.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
 
 <!-- <link rel="stylesheet" type="text/css" href="{{asset('public/css/app.css')}}"> -->
 <link rel="stylesheet" type="text/css" href="{{asset('public/css/main.css')}}">

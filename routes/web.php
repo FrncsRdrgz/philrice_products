@@ -16,11 +16,14 @@ Route::get('/', 'HomeController@index')->name('index');
 Route::post('/view_cart_data','HomeController@view_cart_data')->name('home.view_cart_data');
 
 Route::get('/shop','OrderController@index')->name('shop.index');
-Route::get('/cart','CartController@index')->name('cart.index');
+
 Route::get('/shop_display_seeds','OrderController@display_seeds')->name('order.display_seed');
 
 Route::post('/seed_details','OrderController@seed_details')->name('order.seed_details');
 Route::post('/add_to_cart','OrderController@add_to_cart')->name('order.add_to_cart');
-Route::get('/view_cart_data','OrderController@view_cart_data')->name('order.view_cart_data');
+
+
+Route::get('/cart','CartController@index')->name('cart.index');
+Route::get('/view_cart_data','CartController@view_cart_data')->name('cart.view_cart_data');
 
 Route::get('/checkout','CheckoutController@checkout')->name('checkout.index'); 
