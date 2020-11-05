@@ -25,5 +25,7 @@ Route::post('/add_to_cart','OrderController@add_to_cart')->name('order.add_to_ca
 
 Route::get('/cart','CartController@index')->name('cart.index');
 Route::get('/view_cart_data','CartController@view_cart_data')->name('cart.view_cart_data');
+Route::post('/change_quantity','CartController@change_quantity');
 
 Route::get('/checkout','CheckoutController@checkout')->name('checkout.index'); 
+

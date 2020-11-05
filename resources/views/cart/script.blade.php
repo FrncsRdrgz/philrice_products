@@ -1,5 +1,6 @@
 <script type="text/javascript">
 	$(document).ready(function(){
+		$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 		view_cart_data();
 		/*ALL PROPS HERE*/
 		$('#selectAll').click(function(e){
@@ -12,18 +13,25 @@
 			}
 		})
 
-		$('.plus1').on('click',function(e){
+		$(document).on('click','.plus1',function(e){
+			
 			quantity = $(this).closest('div').find('.quantity1').val();
+			cart_id = $(this).closest('div').find('.quantity1').data('id');
+			change_quantity(quantity,cart_id);
 		})
 
-		$('.minus1').on('click',function(e){
+		$(document).on('click','.minus1',function(e){
 			quantity = $(this).closest('div').find('.quantity1').val();
+			cart_id = $(this).closest('div').find('.quantity1').data('id');
+			change_quantity(quantity,cart_id);
 		})
 
 
 		/*ALL FUNCTIONS HERE*/
+		/*Funtion to view all the data of cart*/
 		function view_cart_data(){
 			$('.append_here').empty();
+			$('.subtotal').empty()
 			$.ajax({
 				type:'get',
 				url:'view_cart_data',
@@ -60,7 +68,7 @@
 								html += '<div class="col-md-2">';
 									html += '<div class="qty_wrapper1 m-auto">';
 										html += '<button class="minus1"></button>';
-										html += '<input type="number" min="0" value="'+value.quantity+'" name="quantity" class="quantity1">';
+										html += '<input type="number" min="0" value="'+value.quantity+'" data-id="'+value.cart_id+'" name="quantity" class="quantity1">';
 										html += '<button class="plus1"></button>';
 									html += '</div>';
 								html += '</div>';
@@ -98,6 +106,23 @@
 				})
 				$('.subtotal').append('₱'+subtotal)
 				$('.append_here').append(html)	
+			})
+		}
+
+		function change_quantity(quantity){
+
+			$.ajax({
+				type:'POST',
+				url:'change_quantity',
+				data:{
+					'quantity' : quantity,
+					'cart_id' : cart_id
+				}
+			})
+			.done(function(response){
+				if(response == 'success'){
+					view_cart_data();
+				}
 			})
 		}
 	})
