@@ -25,7 +25,15 @@ Route::post('/add_to_cart','OrderController@add_to_cart')->name('order.add_to_ca
 
 Route::get('/cart','CartController@index')->name('cart.index');
 Route::get('/view_cart_data','CartController@view_cart_data')->name('cart.view_cart_data');
+Route::get('/get_shipping_addresses','CartController@get_shipping_addresses');
+Route::get('/get_active_address','CartController@get_active_address');
+Route::get('/set_active_address/{id}','CartController@set_active_address');
+Route::post('/municipalities','CartController@municipalities');
+Route::post('/save_address','CartController@save_address');
 Route::post('/change_quantity','CartController@change_quantity');
+Route::post('/delete_cart_item','CartController@delete_cart_item');
+Route::post('/proceed_checkout','CartController@proceed_checkout');
+
 
 Route::get('/checkout','CheckoutController@checkout')->name('checkout.index'); 
 

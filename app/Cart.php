@@ -27,4 +27,9 @@ class Cart extends Model
     			->where('status',0)
     			->get();
     }
+    /* order status
+        0 = add to cart
+        1 = ready for checkout
+        2 = placed order
+    */
 }

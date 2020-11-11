@@ -25,6 +25,6 @@ class CheckoutController extends Controller
             ->groupBy('seedVarietyId')
             ->paginate(2);
         }
-        return view('order.checkout',compact('data','item_count'));
+        return view('checkout.index',compact('data','item_count'));
     }
 }

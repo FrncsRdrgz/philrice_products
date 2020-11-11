@@ -7,6 +7,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('public/assets/AdminLTE-3.0.0/plugins/select2/css/select2.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/assets/AdminLTE-3.0.0/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('public/assets/AdminLTE-3.0.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
-
+<link rel="stylesheet" type="text/css" href="{{asset('public/assets/AdminLTE-3.0.0/plugins/sweetalert2/sweetalert2.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('public/assets/HoldOn.js-master/src/css/HoldOn.min.css')}}">
 <!-- <link rel="stylesheet" type="text/css" href="{{asset('public/css/app.css')}}"> -->
+
 <link rel="stylesheet" type="text/css" href="{{asset('public/css/main.css')}}">

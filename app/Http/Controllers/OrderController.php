@@ -41,7 +41,7 @@ class OrderController extends Controller
     public function display_seeds(){
 
         $activeStockTable = $this->activeStockTable();
-        $item_count = $this->item_count;
+        
         if($activeStockTable != null){
             $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);
             $stocks_tbl = $stocks['table'];
@@ -52,7 +52,7 @@ class OrderController extends Controller
             ->groupBy('seedVarietyId')
             ->paginate(2);
         }
-        
+        //$item_count = $this->item_count();
         return view('order.products',compact('data'))->render();
     }
 
