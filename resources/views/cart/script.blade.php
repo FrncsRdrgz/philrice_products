@@ -173,6 +173,7 @@
 			 	success:(res)=>{
 			 		if(res == 'success'){
 			 			get_active_address();
+			 			$('.append_address_button').empty();
 			 		}
 			 	}
 			 })
