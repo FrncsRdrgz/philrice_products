@@ -56,7 +56,7 @@ class CartController extends Controller
  	}
 
     public function view_cart_data(){
-        $cart_data = Cart::where('user_id',Auth::id())->where('status',0)->orderBy('cart_id','ASC')->get();
+        $cart_data = Cart::where('user_id',Auth::id())->where('status',0)->where('quantity','>',0)->orderBy('cart_id','ASC')->get();
 
         $activeStockTable = $this->activeStockTable();
         //dd($cart_data);

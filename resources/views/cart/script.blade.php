@@ -62,6 +62,7 @@
 			});
 			quantity = $(this).closest('div').find('.quantity1').val();
 			let cart_id = $(this).closest('div').find('.quantity1').data('id');
+			console.log($(this))
 			change_quantity(quantity,cart_id);
 		})
 
@@ -180,8 +181,8 @@
 		/*ALL FUNCTIONS HERE*/
 		/*Funtion to view all the data of cart*/
 		function view_cart_data(){
-			$('.append_here').empty();
-			$('.subtotal').empty()
+			//$('.append_here').empty();
+			//$('.subtotal').empty()
 			$.ajax({
 				type:'get',
 				url:'view_cart_data',
@@ -257,8 +258,8 @@
 
 				count++;		
 				})
-				$('.subtotal').append('₱'+subtotal)
-				$('.append_here').append(html)
+				$('.subtotal').html('₱'+subtotal)
+				$('.append_here').html(html)
 				setTimeout(function(){ HoldOn.close() }, 2000);
 			})
 		}
