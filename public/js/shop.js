@@ -1,4 +1,3 @@
-<script type="text/javascript">
 'use strict';
 	$(document).ready(function(){
 		$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
@@ -188,4 +187,3 @@
 
 
 	})
-</script>

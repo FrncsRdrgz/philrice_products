@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Traits\CountCartItemTrait;
 use App\SeedStock;
 use App\Seed;
 use App\Cart;
@@ -10,6 +11,7 @@ use DB,Auth;
 use Carbon\Carbon;
 class OrderController extends Controller
 {
+    use CountCartItemTrait;
     public function __construct()
     {
         $this->middleware('auth');
@@ -60,23 +62,24 @@ class OrderController extends Controller
 
        $seeds = Seed::findOrFail($request->seed_id);
 
-
        $activeStockTable = $this->activeStockTable();
 
         if($activeStockTable != null){
             $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);
-            $stocks_tbl = $stocks['table'];
+            //$stocks_tbl = $stocks['table'];
             $data = DB::connection('warehouse')
                 ->table($stocks['table'].' as sm')
-                ->leftJoin('rsisdev_seed_seed.seed_characteristics as ss','sm.seedVarietyId','=','ss.id')
-                ->select('ss.maturity','sm.*')
+                ->join('rsisdev_seed_seed.seed_characteristics as ss','sm.seedVarietyId','=','ss.id')
+                ->select(DB::raw('SUM(sm.availableStock) as availableStock'),'ss.maturity','ss.variety','ss.ave_yld','ss.ecosystem','ss.max_yld','sm.seedVarietyId','sm.packaging','sm.taggedSeedClass')
                 ->where('ss.id',$request->seed_id)
+                ->where('sm.taggedSeedClass','RS')
                 ->orderBy('sm.stockId','ASC')
+                ->groupBy('sm.seedVarietyId')
                 ->get();
         }
-
-        $query = ['seeds'=> $seeds, 'data'=> $data];
-       return $query;
+        $data = collect($data)->first();
+        
+       return response()->json($data);
     }
 
     public function add_to_cart(Request $request){
@@ -84,7 +87,7 @@ class OrderController extends Controller
         $seed_class = $request->seed_class;
         $quantity = $request->quantity;
         $activeStockTable = $this->activeStockTable();
-
+        $item_count = $this->item_count();
         if($activeStockTable != null){
             $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);
             $stocks_tbl = $stocks['table'];
@@ -129,7 +132,7 @@ class OrderController extends Controller
 
 
     public function checkout(){
-        $item_count = $this->item_count;
+        $item_count = $this->item_count();
         $activeStockTable = $this->activeStockTable();
         if($activeStockTable != null){
             $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);

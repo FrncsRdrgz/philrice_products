@@ -87,14 +87,10 @@ class Controller extends BaseController
 
     public function activeStockTable(){
         return TableLog::select('tblName')
-                ->where('tblName','like','%tbl_stocks_ces%')
-                ->where('isActive',1)
-                ->orderBy('createdAt','ASC')
-                ->get()
-                ->first();
-    }
-
-    public function item_count(){
-        return Cart::select(DB::raw('SUM(quantity) as quantity'))->where('user_id',Auth::id())->where('status',0)->get()->first();
+            ->where('tblName','like','%tbl_stocks_ces%')
+            ->where('isActive',1)
+            ->orderBy('createdAt','ASC')
+            ->get()
+            ->first();
     }
 }

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Traits\CountCartItemTrait;
 use App\Cart;
 use App\SeedStock;
 use App\ShippingAddress;
 use DB,Auth;
 class CartController extends Controller
 {
+    use CountCartItemTrait;
     /* order status
         0 = add to cart
         1 = ready for checkout

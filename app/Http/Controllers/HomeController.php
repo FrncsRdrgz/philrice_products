@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Traits\CountCartItemTrait;
 use App\SeedStock;
 use App\Cart;
 use DB, Auth;
 class HomeController extends Controller
 {
+    use CountCartItemTrait;
     /**
      * Create a new controller instance.
      *

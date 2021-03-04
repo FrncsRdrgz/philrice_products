@@ -35,5 +35,5 @@
 @endsection
 
 @push('scripts')
-    @include('order.script')
+    <script type="text/javascript" src="{{asset('public/js/shop.js')}}?v=1"></script>
 @endpush
