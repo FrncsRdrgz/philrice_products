@@ -1,7 +1,7 @@
 @extends('layouts.index')
 
 @push('styles')
-    @include('order.style')
+    @include('shop.style')
 @endpush
 @section('content')
 
@@ -31,7 +31,7 @@
 </div>
     
 
-@include('order.product_details')
+@include('shop.product_details')
 @endsection
 
 @push('scripts')

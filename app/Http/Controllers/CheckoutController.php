@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Traits\CountCartItemTrait;
 use DB,Auth;
 use App\SeedStock;
 class CheckoutController extends Controller
 {
+    use CountCartItemTrait;
 	public function __construct()
     {
         $this->middleware('auth');
@@ -25,6 +27,7 @@ class CheckoutController extends Controller
             ->groupBy('seedVarietyId')
             ->paginate(2);
         }
+
         return view('checkout.index',compact('data','item_count'));
     }
 }

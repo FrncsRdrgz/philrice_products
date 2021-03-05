@@ -8,19 +8,63 @@
 --}}
 
 <script type="text/javascript">
+	'use strict';
 	$(document).ready(function(){
 		/*document ready functions*/
 		$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 		view_cart_data();
 		
 		/*global variables here*/
-		var count = 0;
-	
+		let count = 0;
+		
+		const cartTemplate = function(cart){
+			let html = "";
+			html += '<div class="card no_radius mb-2">';
+			html += '<div class="card-body p-2">';
+				html += '<div class="row">';
+
+					
+					html += '<div class="col-md-2 offset-md-1">';
+						html += '<h5 class="h6 text-center">';
+							html += cart.variety
+						html += '</h5>';
+						html += '<img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/No_image_available_600_x_450.svg/1280px-No_image_available_600_x_450.svg.png" alt="Colorlib Template">';
+						html += '<div class="overlay"></div>';
+					html += '</div>';
+
+					html += '<div class="col-md-2 offset-md-1">';
+						html += '<h5 class="h6 text-center">';
+							html += '₱'+cart.price
+						html += '</h5>';
+					html += '</div>';
+
+					html += '<div class="col-md-2">';
+						html += '<div class="qty_wrapper1 m-auto">';
+							html += '<button class="minus1"></button>';
+							html += '<input type="number" min="0" value="'+cart.quantity+'" data-id="'+cart.cart_id+'" name="quantity" class="quantity1">';
+							html += '<button class="plus1"></button>';
+						html += '</div>';
+					html += '</div>';
+
+					html += '<div class="col-md-2">';
+						html += '<h5 class="h6 text-center">';
+							html += '₱'
+						html += '</h5>';
+					html += '</div>';
+
+					html += '<div class="col-md-2">';
+						html += '<h5 class="h6 text-center">';
+							html += '<a href="#" class="delete_button text-danger">Delete</a>'
+						html += '</h5>';
+					html += '</div>';
+				html += '</div>';
+			html += '</div>';
+		html += '</div>';
+		}
 		/*ALL ONCHANGE HERE*/
 		$(document).on('change','#province',()=>{
-			province_id = $('#province option:selected').val();
-			region_id = $('#province option:selected').attr('region_id')
-			console.log(province_id,region_id)
+			let province_id = $('#province option:selected').val();
+			let region_id = $('#province option:selected').attr('region_id')
 			$('#municipality').empty();
 			$('#municipality').append(`<option selected disabled>Loading...</option>`)
 
@@ -32,7 +76,7 @@
 					province_id:province_id,
 				},success: (response)=> {
 					$('#municipality').empty() // empty municipality
-                    var options = `<option value="0" selected disabled>Municipality</option>`
+                    let options = `<option value="0" selected disabled>Municipality</option>`
                     response.forEach((item)=> {
                         options += `<option value="`+item.municipality_id+`">`+item.name+`</option>`
                     })
@@ -60,7 +104,7 @@
 			HoldOn.open({
 			  theme:"sk-cube-grid"
 			});
-			quantity = $(this).closest('div').find('.quantity1').val();
+			let quantity = $(this).closest('div').find('.quantity1').val();
 			let cart_id = $(this).closest('div').find('.quantity1').data('id');
 			console.log($(this))
 			change_quantity(quantity,cart_id);
@@ -70,8 +114,8 @@
 			HoldOn.open({
 			  theme:"sk-cube-grid"
 			});
-			quantity = $(this).closest('div').find('.quantity1').val();
-			cart_id = $(this).closest('div').find('.quantity1').data('id');
+			let quantity = $(this).closest('div').find('.quantity1').val();
+			let cart_id = $(this).closest('div').find('.quantity1').data('id');
 			change_quantity(quantity,cart_id);
 		})
 
@@ -80,22 +124,22 @@
 			HoldOn.open({
 			  theme:"sk-cube-grid"
 			});
-			cart_id = $(this).closest('.row').find('.quantity1').data('id');
+			let cart_id = $(this).closest('.row').find('.quantity1').data('id');
 			delete_cart_item(cart_id);
 
 		})
-		$(document).on('click','.checkout_btn',function(e){
+		$(document).on('click','.reserve_btn',function(e){
 			e.preventDefault();
-			var array = [];
+			/*let array = [];
 			$(".quantity1").each(function(){
 				array.push({cart_id : $(this).data('id')});
-			})
+			})*/
 				$.ajax({
 					type:'post',
-					url:'proceed_checkout',
-					data:{
+					url:'proceed_reservation',
+					/*data:{
 						cart_id_array: array
-					}
+					}*/
 				})
 				.done(function(response){
 					if(response == 'success'){
@@ -147,7 +191,7 @@
 			e.preventDefault()
 			$('.append_address_button').empty();
 
-			html = ''
+			let html = ''
 			html +=	'<div class="row">'
 		        html += '<div class="col-md-12">'
 		            html += '<button type="button" class="btn btn-light" data-toggle="modal" data-target="#addressModal"><i class="fa fa-plus"></i> Add Address</button>&nbsp;';
@@ -189,11 +233,12 @@
 				url:'view_cart_data',
 			})
 			.done(function(response){
-				console.log(response);
-				html = "";
-				var subtotal = 0;
+				//console.log(response);
+				cartTemplate(response);
+				let html = "";
+				let subtotal = 0;
 				$.each(response, function(index,value){
-					total_price = (parseInt(value.price) * parseInt(value.quantity))
+					let total_price = (parseInt(value.price) * parseInt(value.quantity))
 					subtotal += total_price
 					html += '<div class="card no_radius mb-2">';
 						html += '<div class="card-body p-2">';
@@ -261,6 +306,11 @@
 				})
 				$('.subtotal').html('₱'+subtotal)
 				$('.append_here').html(html)
+				console.log(html);
+				/*if(html !== "" || html !== undefined || html == null){
+					document.querySelector('.reserve_btn').removeAttribute('disabled');
+				}
+*/
 				setTimeout(function(){ HoldOn.close() }, 2000);
 			})
 		}
@@ -305,7 +355,7 @@
 				type:'get',
 				url:'get_shipping_addresses',
 				success:(res)=>{
-					html = '';
+					let html = '';
 					$.each(res,(index,value)=>{
 						html += '<div class="row">';
 							html += '<div class="col-md-1">';
@@ -346,7 +396,7 @@
 				type:'get',
 				url:'get_active_address',
 				success:(res)=>{
-					html = ''
+					let html = ''
 
 					html += '<div class="row">'
 	                    html += '<div class="col-md-3">'

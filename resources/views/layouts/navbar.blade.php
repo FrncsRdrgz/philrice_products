@@ -20,9 +20,18 @@
 			  <li class="nav-item">
 			    <a href="{{url('/shop')}}" class="nav-link">Shop</a>
 			  </li>
-			  @if(Request::segment(1) != 'cart')
+			  @if(Request::segment(1) !== 'cart')
 			  <li class="nav-item cart_trigger_button"><a href="{{url('/cart')}}" class="nav-link"><i class="fa fa-shopping-cart"></i><span class="badge badge-primary navbar-badge">{{$item_count->quantity}}</span></a></li>
 			  @endif
+			  <li class="nav-item dropdown">
+			    <a href="{{url('/shop')}}" data-toggle="dropdown" class="nav-link"><i class="fas fa-user"></i> &nbsp;{{Auth::user()->username}}</a>
+			    <div class="dropdown-menu  dropdown-menu-right">
+			    	<a href="{{url('/order')}}" class="dropdown-item"><i class="fas fa-clipboard-list"></i> My Order</a>
+
+			    	<a href="{{ url('/logout') }}" class="dropdown-item"><i class="fa fa-sign-out-alt"></i> Logout</a>
+			    </div>
+			    
+			  </li>
 			</ul>
 		</div>
     	@endif

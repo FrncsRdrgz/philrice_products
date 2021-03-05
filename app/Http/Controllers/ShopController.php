@@ -9,7 +9,7 @@ use App\Seed;
 use App\Cart;
 use DB,Auth;
 use Carbon\Carbon;
-class OrderController extends Controller
+class ShopController extends Controller
 {
     use CountCartItemTrait;
     public function __construct()
@@ -37,7 +37,7 @@ class OrderController extends Controller
         }
         //dd($data);
         $item_count = $this->item_count();
-        return view('order.index',compact('data','item_count'));
+        return view('shop.index',compact('data','item_count'));
     }
 
     public function display_seeds(){
@@ -55,7 +55,7 @@ class OrderController extends Controller
             ->paginate(2);
         }
         //$item_count = $this->item_count();
-        return view('order.products',compact('data'))->render();
+        return view('shop.products',compact('data'))->render();
     }
 
     public function seed_details(Request $request){
@@ -88,6 +88,7 @@ class OrderController extends Controller
         $quantity = $request->quantity;
         $activeStockTable = $this->activeStockTable();
         $item_count = $this->item_count();
+        $res2 = "";
         if($activeStockTable != null){
             $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);
             $stocks_tbl = $stocks['table'];
@@ -107,27 +108,43 @@ class OrderController extends Controller
             'status' => 1,
             'quantity' => $quantity*$data->packaging
         );
-
-        $check_cart = Cart::where('pallet_code',$data->palletCode)->first();
+        $check_cart = Cart::where('pallet_code',$data->palletCode)->where('status', 0)->first();
 
         if($check_cart != null){
-            $cart = Cart::findOrFail($check_cart->cart_id);
-
-            $cart->quantity = $cart->quantity + $quantity;
-            $cart->save();
+            DB::beginTransaction();
+            try{
+                $cart = Cart::findOrFail($check_cart->cart_id);
+                $cart->quantity = $cart->quantity + $quantity;
+                $cart->save();
+                DB::commit();
+                $res2 = "success";
+            }catch(Exception $e){
+                DB::rollback();
+                $res2 = "error";
+            }
+            
         }
         else{
-            $cart = new Cart;
+            DB::beginTransaction();
+            try {
+                $cart = new Cart;
 
             $cart->user_id = Auth::user()->user_id;
             $cart->pallet_code = $data->palletCode;
             $cart->status = 0;
             $cart->quantity = $quantity;
-
-            $cart->save();  
+            $cart->table_name = $stocks['table'];
+            $cart->save();
+            DB::commit();
+            $res2 = "success";
+            }catch(Exception $e){
+                DB::rollback();
+                $res2 = "error";
+            }
+             
         }
 
-        
+        return $res2;
     }
 
 
@@ -144,6 +161,6 @@ class OrderController extends Controller
             ->groupBy('seedVarietyId')
             ->paginate(2);
         }
-        return view('order.checkout',compact('data','item_count'));
+        return view('shop.checkout',compact('data','item_count'));
     }
 }

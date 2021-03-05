@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Traits\CountCartItemTrait;
+use App\Traits\GetActiveShippingAddressTrait;
 use App\Cart;
 use App\SeedStock;
 use App\ShippingAddress;
+use App\Order;
+use App\OrderItem;
 use DB,Auth;
+use Carbon\Carbon;
 class CartController extends Controller
 {
-    use CountCartItemTrait;
+    use CountCartItemTrait,GetActiveShippingAddressTrait;
     /* order status
         0 = add to cart
         1 = ready for checkout
@@ -24,7 +28,7 @@ class CartController extends Controller
 
  	public function index(){
  		$cart_data = Cart::where('user_id',Auth::id())->where('status',0)->get();
-        $active_address = ShippingAddress::where('user_id',Auth::id())->where('is_default',1)->get()->first();
+        $active_address = $this->get_active_address(Auth::id());
         //dd(Auth::user()->fullname);
         $activeStockTable = $this->activeStockTable();
         //dd($cart_data);
@@ -129,10 +133,42 @@ class CartController extends Controller
         return $res2;
     }
 
-    public function proceed_checkout(Request $request){
-        $cart_id_array = $request->cart_id_array;
+    public function proceed_reservation(Request $request){
+        //$cart_id_array = $request->cart_id_array;
+        //dd($request->all());
+        $cart_items = Cart::where('user_id',Auth::id())->where('status',0)->get();
 
-        foreach($cart_id_array as $array){
+        DB::beginTransaction();
+        try{
+            $order = new Order;
+            $order->user_id = Auth::id();
+            $order->order_date = Carbon::now();
+            $order->status = 1;
+            $order->order_type = 0;
+            $order->reservation_expiration_date = Carbon::now()->addDays(3);
+            $order->save();
+
+            foreach($cart_items as $item){
+                $orderItem = new OrderItem;
+                $orderItem->order_id = $order->order_id;
+                $orderItem->pallet_code = $item->pallet_code;
+                $orderItem->quantity = $item->quantity;
+                $orderItem->status = 1;
+                $orderItem->table_name = $item->table_name;
+                $orderItem->save();
+
+                DB::commit();
+                $res2 = "success";
+
+                Cart::where('user_id',Auth::id())->where('cart_id',$item->cart_id)->update([
+                    'status' => 3
+                ]);
+            }
+        }catch(Exeption $e){
+            DB::rollback();
+            $res2 = $e->getMessage();
+        }
+        /*foreach($cart_id_array as $array){
             DB::beginTransaction();
             try{
                 $cart = Cart::where('cart_id',$array['cart_id'])
@@ -144,7 +180,7 @@ class CartController extends Controller
                 DB::rollback();
                 $res2 = $e->getMessage();
             }
-        }
+        }*/
         return $res2;
     }
 
@@ -199,9 +235,8 @@ class CartController extends Controller
         return $address;
     }
 
-    public function get_active_address(){
-        $active_address = ShippingAddress::where('user_id',Auth::id())->where('is_default',1)->get()->first();
-        return $active_address;
+    public function active_address(){
+        return $this->get_active_address(Auth::id());
     }
 
     public function set_active_address($id){
