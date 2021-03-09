@@ -32,4 +32,8 @@ class Cart extends Model
         1 = ready for checkout
         2 = placed order
     */
+
+    public function count($id){
+        return Cart::select(DB::raw('SUM(quantity) as quantity'))->where('user_id',$id)->where('status',0)->get()->first();
+    }
 }

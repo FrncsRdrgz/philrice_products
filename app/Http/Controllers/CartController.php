@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Traits\CountCartItemTrait;
 use App\Traits\GetActiveShippingAddressTrait;
+use App\Repositories\CartRepository;
 use App\Cart;
 use App\SeedStock;
 use App\ShippingAddress;
@@ -14,15 +15,16 @@ use DB,Auth;
 use Carbon\Carbon;
 class CartController extends Controller
 {
-    use CountCartItemTrait,GetActiveShippingAddressTrait;
+    use GetActiveShippingAddressTrait;
     /* order status
         0 = add to cart
         1 = ready for checkout
         2 = placed order
 
     */
-	public function __construct()
+	public function __construct(CartRepository $cartRepository)
     {
+        $this->cartRepository = $cartRepository;
         $this->middleware('auth');
     }
 
@@ -56,9 +58,8 @@ class CartController extends Controller
                 }
             }
         }
-        $item_count = $this->item_count();
         $provinces = $this->provinces();
-        return view('cart.index',compact('data','item_count','provinces','active_address'));
+        return view('cart.index',compact('data','provinces','active_address'));
  	}
 
     public function view_cart_data(){
@@ -146,6 +147,10 @@ class CartController extends Controller
             $order->status = 1;
             $order->order_type = 0;
             $order->reservation_expiration_date = Carbon::now()->addDays(3);
+            $order->device = $this->device();
+            $order->ip_env_address = $request->ip();
+            $order->ip_server_address = request()->server('SERVER_ADDR');
+            $order->timestamp => Carbon::now();
             $order->save();
 
             foreach($cart_items as $item){

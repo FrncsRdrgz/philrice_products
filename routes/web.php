@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('/proceed_reservation','CartController@proceed_reservation');
 
 	Route::get('/order','MyOrderController@index');
-
+	Route::get('/getOrders','MyOrderController@getOrders');
 	Route::get('/checkout','CheckoutController@checkout')->name('checkout.index'); 
 
 });

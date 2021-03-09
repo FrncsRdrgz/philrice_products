@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Traits\CountCartItemTrait;
+use App\Repositories\CartRepository;
 use App\SeedStock;
 use App\Seed;
 use App\Cart;
@@ -11,9 +11,9 @@ use DB,Auth;
 use Carbon\Carbon;
 class ShopController extends Controller
 {
-    use CountCartItemTrait;
-    public function __construct()
+    public function __construct(CartRepository $cartRepository)
     {
+        $this->cartRepository = $cartRepository;
         $this->middleware('auth');
     }
 
@@ -36,7 +36,7 @@ class ShopController extends Controller
             ->paginate(2);
         }
         //dd($data);
-        $item_count = $this->item_count();
+        $item_count = $this->cartRepository->count(Auth::id());
         return view('shop.index',compact('data','item_count'));
     }
 
@@ -87,7 +87,6 @@ class ShopController extends Controller
         $seed_class = $request->seed_class;
         $quantity = $request->quantity;
         $activeStockTable = $this->activeStockTable();
-        $item_count = $this->item_count();
         $res2 = "";
         if($activeStockTable != null){
             $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);
@@ -149,7 +148,6 @@ class ShopController extends Controller
 
 
     public function checkout(){
-        $item_count = $this->item_count();
         $activeStockTable = $this->activeStockTable();
         if($activeStockTable != null){
             $stocks = new SeedStock(['table' => $activeStockTable['tblName']]);
@@ -161,6 +159,6 @@ class ShopController extends Controller
             ->groupBy('seedVarietyId')
             ->paginate(2);
         }
-        return view('shop.checkout',compact('data','item_count'));
+        return view('shop.checkout',compact('data'));
     }
 }

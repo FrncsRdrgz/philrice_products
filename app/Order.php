@@ -18,4 +18,9 @@ class Order extends Model
     	'reservation_expiration_date',
     ];
     public $timestamps = false;
+
+    public function orderItems(){
+        return $this->hasMany('App\OrderItem','order_id');
+    }
+    
 }

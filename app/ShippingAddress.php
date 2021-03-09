@@ -30,4 +30,9 @@ class ShippingAddress extends Model
 
         return $municipalities;
     }
+
+    public function get_active_address($user_id){
+        $active_address = ShippingAddress::where('user_id',$user_id)->where('is_default',1)->get()->first();
+        return $active_address;
+    }
 }

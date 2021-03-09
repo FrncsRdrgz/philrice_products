@@ -17,4 +17,10 @@ class OrderItem extends Model
     	'table_name'
     ];
     public $timestamps = false;
+
+    public function order(){
+        return $this->belongsTo('App\Order');
+    }
+
+    
 }
