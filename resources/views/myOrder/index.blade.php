@@ -15,7 +15,7 @@
 							<p class="m-0 orderHeader" id="btnPending">Pending</p>
 						</div>
 						<div class=" col-md-2 border-right">
-							<p class="m-0 orderHeader" id="btnProcessed">Processed</p>
+							<p class="m-0 orderHeader" id="btnProcessed">For Pickup</p>
 						</div>
 						<div class=" col-md-2">
 							<p class="m-0 orderHeader" id="btnCompleted">Completed</p>

@@ -51,7 +51,7 @@ const ordersTemplate = function(item){
 					<div class="col-md-1 border-bottom">
 					<p class="text-danger">`;
 					if(item.status === 1) html += `Pending`
-					else if (item.status === 2) html += `Processed`
+					else if (item.status === 2) html += `For Pickup`
 					else if (item.status === 3) html += `Cancelled`
 					else if (item.status === 4) html += `Completed`
 	html += 		`</p>
@@ -62,7 +62,7 @@ const ordersTemplate = function(item){
 				</div>
 			</div>
 		</div>
-	`
+	`;
 	return html;
 }
 
