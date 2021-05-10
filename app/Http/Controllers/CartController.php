@@ -147,10 +147,11 @@ class CartController extends Controller
             $order->status = 1;
             $order->order_type = 0;
             $order->reservation_expiration_date = Carbon::now()->addDays(3);
-            $order->device = $this->device();
+            $order->table_name = $cart_items[0]->table_name;
+            /*$order->device = $this->device();
             $order->ip_env_address = $request->ip();
             $order->ip_server_address = request()->server('SERVER_ADDR');
-            $order->timestamp => Carbon::now();
+            $order->timestamp = Carbon::now();*/
             $order->save();
 
             foreach($cart_items as $item){

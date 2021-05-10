@@ -6,6 +6,9 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Browser;
 use DB, Auth;
 use Storage;
@@ -85,12 +88,10 @@ class Controller extends BaseController
         return Browser::platformName();
     }
 
-    public function activeStockTable(){
-        return TableLog::select('tblName')
-            ->where('tblName','like','%tbl_stocks_ces%')
-            ->where('isActive',1)
-            ->orderBy('createdAt','ASC')
-            ->get()
-            ->first();
+    public function paginate($items, $perPage = 1, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }

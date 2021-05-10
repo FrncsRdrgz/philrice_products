@@ -8,6 +8,7 @@ use Auth;
 
 class Role extends EntrustRole
 {
+    protected $connection = 'rsis';
     protected $primaryKey = 'role_id';
 
     protected $fillable = ['name', 'display_name', 'description'];

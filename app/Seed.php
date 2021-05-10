@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Seed extends Model
 {
-    protected $connection = 'seed';
+    protected $connection = 'seeds';
 
     protected $table = 'seed_characteristics';
 

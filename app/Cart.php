@@ -19,11 +19,12 @@ class Cart extends Model
 
     public $timestamps = false;
 
-    public function findByUserId($user_id){
+    public function findByUserId($serial_num){
+        
     	return DB::connection('bdd_online')
     			->table('tbl_cart')
     			->select('*')
-    			->where('user_id',$user_id)
+    			->where('serial_num',$serial_num)
     			->where('status',0)
     			->get();
     }
@@ -33,7 +34,7 @@ class Cart extends Model
         2 = placed order
     */
 
-    public function count($id){
-        return Cart::select(DB::raw('SUM(quantity) as quantity'))->where('user_id',$id)->where('status',0)->get()->first();
+    public function count($serial_num){
+        return Cart::select(DB::raw('SUM(quantity) as quantity'))->where('serial_num',$serial_num)->where('status',0)->get()->first();
     }
 }

@@ -3,15 +3,13 @@
 		$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 		const seedClassBtn = document.querySelectorAll('.seed_class');
 		const seedModalTemplate = function (params){
-			console.log(params);
-			let checkClassFS = params.taggedSeedClass === 'FS' ? params.taggedSeedClass : undefined;
-			let checkClassRS = params.taggedSeedClass === 'RS' ? params.taggedSeedClass : undefined;
+			let checkClassFS = params.inbred_class === 'Foundation Seed' ? params.inbred_class : undefined;
+			let checkClassRS = params.inbred_class === 'Registered Seed' ? params.inbred_class : undefined;
 
-			
 			let html = "";
 			let seedClass = "";
 				html += `
-					<div class="seed_div" data-id="${params.seedVarietyId}">
+					<div class="seed_div" data-id="${params.variety}">
 					<p class="m-0">Ecosystem</p>
 					<h4 class="border-bottom">${params.ecosystem}</h4>
 					<p class="m-0">Average Yield</p>
@@ -79,8 +77,8 @@
 		//display the seeds details when clicked the product detail button
 		$(document).on('click','.product_detail_button',function(e){
 			e.preventDefault()
-			let seed_id=$(this).data('id');
-			seed_detail(seed_id);
+			let variety=$(this).data('id');
+			seed_detail(variety);
 			//$('#exampleModal').modal();
 		})
 
@@ -145,12 +143,12 @@
 		}
 
 		//display the details of selected seed
-		function seed_detail(seed_id){
+		function seed_detail(variety){
 			$.ajax({
 				url:'seed_details',
 				type:'POST',
 				data:{
-					seed_id :seed_id
+					variety :variety
 				}
 			})
 			.done(function(response){

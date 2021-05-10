@@ -4,7 +4,6 @@
 		$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 		const seedClassBtn = document.querySelectorAll('.seed_class');
 		const seedModalTemplate = function (params){
-			console.log(params);
 			let checkClassFS = params.taggedSeedClass === 'FS' ? params.taggedSeedClass : undefined;
 			let checkClassRS = params.taggedSeedClass === 'RS' ? params.taggedSeedClass : undefined;
 
@@ -81,6 +80,7 @@
 		$(document).on('click','.product_detail_button',function(e){
 			e.preventDefault()
 			let seed_id=$(this).data('id');
+			console.log(seed_id);
 			seed_detail(seed_id);
 			//$('#exampleModal').modal();
 		})

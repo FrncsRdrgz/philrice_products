@@ -143,7 +143,7 @@
 				})
 				.done(function(response){
 					if(response == 'success'){
-						window.location.href = "{{url('/checkout')}}";
+						window.location.href = "{{url('/order')}}";
 					}
 				})
 		})

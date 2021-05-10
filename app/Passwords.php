@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Passwords extends Model
 {
+    protected $connection = "rsis";
     protected $primaryKey = 'password_id';
     
     protected $fillable = ['password', 'user_id', 'system_id'];

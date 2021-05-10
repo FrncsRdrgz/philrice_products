@@ -8,6 +8,7 @@ use Auth;
 
 class Permission extends EntrustPermission
 {
+    protected $connection = 'rsis';
     protected $primaryKey = 'permission_id';
 
     protected $fillable = ['name', 'display_name', 'description'];

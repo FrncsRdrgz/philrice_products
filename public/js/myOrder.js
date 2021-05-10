@@ -5,6 +5,7 @@ $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('conten
  2 = Processed
  3 = Cancelled
  4 = Completed
+ 5 = Expired
 */
 let status = 0;
 
@@ -77,7 +78,7 @@ const orderItemsTemplate = function (item){
 				<p class="m-0">Average Yield: <span class="font-weight-bold">${item.ave_yld} t/ha</span></p>
 				<p class="m-0">Max Yield: <span class="font-weight-bold">${item.max_yld} t/ha</span></p>
 				<p class="m-0">Maturity: <span class="font-weight-bold">${item.maturity} days</span></p>
-				<p class="m-0">Quantity: <span class="font-weight-bold"> ${item.quantity} bags</span></p>
+				<p class="m-0">Quantity: <span class="font-weight-bold"> ${item.quantity} bag(s)</span></p>
 			</div>
 		</div>
 		`;
@@ -120,42 +121,6 @@ for(let i = 0; i < orderHeader.length; i++){
 		
 	})
 }
-/*document.getElementById('btnAll').addEventListener('click', function(){
-	if(status !== 0){
-		status = 0;
-		this.classList.add('active');
-		getAllOrders();	
-	}
-	
-});
-document.getElementById('btnPending').addEventListener('click', function (){
-	if(status !== 1){
-		status = 1;
-		getAllOrders();
-	}
-})
-
-document.getElementById('btnProcessed').addEventListener('click', function (){
-	if(status !== 2){
-		status = 2;
-		getAllOrders();
-	}
-})
-
-document.getElementById('btnCancelled').addEventListener('click', function (){
-	if(status !== 3){
-		status = 3;
-		getAllOrders();
-	}
-})
-
-document.getElementById('btnCompleted').addEventListener('click', function (){
-	if(status !== 4){
-		status = 4;
-		getAllOrders();
-	}
-})*/
-
 
 //call all function here
 getAllOrders();

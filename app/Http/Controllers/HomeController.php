@@ -7,6 +7,7 @@ use App\Traits\CountCartItemTrait;
 use App\SeedStock;
 use App\Cart;
 use DB, Auth;
+use Entrust;
 class HomeController extends Controller
 {
     use CountCartItemTrait;
